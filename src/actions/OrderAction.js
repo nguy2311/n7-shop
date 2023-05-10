@@ -1,4 +1,5 @@
 import axios from "axios";
+import {BASE_URL_WEB} from "../constants/UserConstant";
 
 let config = {
     headers: {
@@ -13,7 +14,7 @@ export const createOrder = (order) => async (dispatch, getState) => {
             userSignin: {userInfo},
         } = getState();
         const {data} = await axios.post(
-            "http://localhost:4000/order/create",
+            `${BASE_URL_WEB}/bill/create`,
             order,
             {
                 headers: {

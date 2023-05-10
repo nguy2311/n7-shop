@@ -38,8 +38,6 @@ function Header(props) {
         setSearch('')
     };
 
-    console.log('userInfo', userInfo);
-
     return (
         <div className="header">
             <section id="menu">
@@ -55,7 +53,9 @@ function Header(props) {
                             name="search"
                             placeholder="Tìm kiếm ..."
                             defaultValue={setSearch}
-                            onChange={(e) => setSearch(e.target.value)}
+                            onChange={(e) =>
+                                setSearch(e.target.value)
+                            }
                         ></input>
                         <SearchOutlined onClick={(e) => SearchProduct(e)}></SearchOutlined>
                         {/* <button type="submit" onClick={(e) => SearchProduct(e)}>Search</button> */}

@@ -1,19 +1,20 @@
 import axios from 'axios'
-
+import {BASE_URL_WEB} from "../constants/UserConstant";
+import jwt from 'jsonwebtoken';
 export const login = (user) => async (dispatch) => {
     try {
-        const {data} = await axios.post('https://linhnd-web-hdv.onrender.com/api/v1/user/login', user)
+        const {data} = await axios.post(`${BASE_URL_WEB}/user/login`, user)
+        const infoUser = await jwt.verify(String(data.data), "1234")
         dispatch({type: 'USER_LOGIN_SUCCESS', payload: data});
-        localStorage.setItem('userInfo', JSON.stringify(data.data));
+        localStorage.setItem('userInfo', JSON.stringify(infoUser));
     } catch (error) {
         dispatch({type: 'USER_LOGIN_FAIL', payload: error.response.data.message});
     }
 };
 
-
 export const SignupUser = (user) => async (dispatch) => {
     try {
-        const {data} = await axios.post('https://linhnd-web-hdv.onrender.com/api/v1/user/create', user)
+        const {data} = await axios.post(`${BASE_URL_WEB}/user/create`, user)
         localStorage.setItem('userInfo', JSON.stringify(data.data));
         dispatch({type: 'USER_SIGNUP_SUCCESS', payload: data});
         document.location.href = '/';
@@ -32,7 +33,7 @@ export const getAllUser = () => async (dispatch, getState) => {
         userSignin: {userInfo},
     } = getState()
     try {
-        const {data} = await axios.get('https://linhnd-web-hdv.onrender.com/api/v1/user/list')
+        const {data} = await axios.get(`${BASE_URL_WEB}/user/list`)
         dispatch({type: 'GET_ALL_USER', payload: data})
     } catch (error) {
         dispatch({type: 'GET_ALL_USER_FAIL', payload: error.message})

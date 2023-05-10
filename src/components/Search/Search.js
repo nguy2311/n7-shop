@@ -6,8 +6,7 @@ import ListProduct from './ListProduct'
 function Search(props) {
     const searchProduct = useSelector(state => state.searchProduct)
     const {products} = searchProduct;
-    
-    
+
     return (
         <section id="hotsale iphone">
             <div className="hotsale">

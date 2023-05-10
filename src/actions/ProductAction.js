@@ -1,6 +1,6 @@
 import axios from "axios";
 import actions from './product.action'
-import {BASE_URL} from '../constants/UserConstant'
+import {BASE_URL, BASE_URL_WEB} from '../constants/UserConstant'
 import {axiosClient} from "../services/config.services";
 
 export const filterProductByType = (name) => async (dispatch) => {
@@ -24,7 +24,7 @@ export const filterProductByRandomField = (infoProduct) => async (dispatch) => {
 
 export const getAllProduct = () => async (dispatch) => {
     try {
-        const {data} = await axios.get(`https://linhnd-web-hdv.onrender.com/api/v1/products/all`);
+        const {data} = await axios.get(`${BASE_URL_WEB}/product/all`);
         dispatch({type: "GET_ALL_PRODUCT", payload: data});
     } catch (error) {
         dispatch({type: "GET_ALL_PRODUCT_FAIL", payload: error.message});
@@ -69,7 +69,7 @@ export const paginationProduct = (page) => async (dispatch) => {
 export const getproductById = (id) => async (dispatch) => {
     try {
         const {data} = await axios.get(
-            `http://localhost:4000/products/detail/${id}`
+            `${BASE_URL_WEB}/product/getById/?productId=${id}`
         );
         dispatch({type: "GET_PRODUCT_BY_ID", payload: data});
     } catch (error) {
@@ -89,7 +89,7 @@ export const saveProduct = (product) => async (dispatch, getState) => {
         } = getState();
         if (!product.get('_id')) {
             const {data} = await axios.post(
-                "http://localhost:4000/products/create",
+                `${BASE_URL_WEB}/product/create`,
                 product,
                 {
                     headers: {
@@ -101,7 +101,7 @@ export const saveProduct = (product) => async (dispatch, getState) => {
             // document.location.href = '/admin/product';
         } else {
             const {data} = await axios.put(
-                `http://localhost:4000/products/update`,
+                `${BASE_URL_WEB}/product/update`,
                 product,
                 {
                     headers: {
@@ -123,7 +123,7 @@ export const DeleteProduct = (productId) => async (dispatch, getState) => {
             userSignin: {userInfo},
         } = getState();
         const {data} = await axios.delete(
-            `http://localhost:4000/products/delete/${productId}`,
+            `${BASE_URL_WEB}/product/delete`,
             {
                 headers: {
                     Authorization: `Bearer ${userInfo.token}`,
@@ -139,8 +139,10 @@ export const DeleteProduct = (productId) => async (dispatch, getState) => {
 export const searchProduct = (name) => async (dispatch, getState) => {
     try {
         const {data} = await axios.get(
-            `http://localhost:4000/products/search/product?name=${name}`
+            `${BASE_URL_WEB}/product/search/?product_name=${name}`
         );
+
+        console.log('data', data);
         dispatch({type: "SEARCH_PRODUCT", payload: data});
     } catch (error) {
         dispatch({type: "SEARCH_PRODUCT_FAIL", payload: error.message});

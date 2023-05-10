@@ -14,8 +14,7 @@ import image from "../image.jpg";
 function Detail(props) {
     const dispatch = useDispatch()
     const {id} = useParams();
-    // const detailProduct = useSelector(state => state.getProductById.product)
-    const product = useSelector(state => state.allProduct.product);
+    const detailProduct = useSelector(state => state.getProductById.product)
 
     useEffect(() => {
         dispatch(getAllProduct())
@@ -23,10 +22,11 @@ function Detail(props) {
             return []
         }
     }, [dispatch])
-    const detailProduct  = product.data && product.data.find(product => product.id === Number(id));
-    // useEffect(() => {
-    //     dispatch(getproductById(id))
-    // }, [dispatch])
+    useEffect(() => {
+        dispatch(getproductById(id))
+    }, [dispatch])
+
+    console.log('detailProduct', detailProduct);
 
     return (
         <section id="detail">
