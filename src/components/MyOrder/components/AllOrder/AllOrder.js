@@ -39,8 +39,6 @@ function AllOrder(props) {
     dispatch(getOrderByUser(userInfo.id));
   }, []);
 
-    console.log()
-
   return (
     <div className="all-myorder">
       {myOrders && myOrders.length > 0 ? myOrders.map((item) => orderParent(item)) : "Bạn không có đơn hàng nào"}

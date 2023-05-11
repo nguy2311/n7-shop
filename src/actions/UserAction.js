@@ -1,12 +1,15 @@
 import axios from 'axios'
 import {BASE_URL_WEB} from "../constants/UserConstant";
 import jwt from 'jsonwebtoken';
+
 export const login = (user) => async (dispatch) => {
     try {
         const {data} = await axios.post(`${BASE_URL_WEB}/user/login`, user)
         const infoUser = await jwt.verify(String(data.data), "1234")
         dispatch({type: 'USER_LOGIN_SUCCESS', payload: data});
-        localStorage.setItem('userInfo', JSON.stringify(infoUser));
+        localStorage.setItem('userInfo', JSON.stringify({
+            ...infoUser, accessToken: String(data.data)
+        }));
     } catch (error) {
         dispatch({type: 'USER_LOGIN_FAIL', payload: error.response.data.message});
     }
@@ -32,9 +35,16 @@ export const getAllUser = () => async (dispatch, getState) => {
     const {
         userSignin: {userInfo},
     } = getState()
-    try {
-        const {data} = await axios.get(`${BASE_URL_WEB}/user/list`)
-        dispatch({type: 'GET_ALL_USER', payload: data})
+    try
+        if (userInfo.role === 'admin') {
+            const {data} = await axios.get(`${BASE_URL_WEB}/user/list`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${userInfo.accessToken}`,
+                    }
+                })
+            dispatch({type: 'GET_ALL_USER', payload: data.data})
+        }
     } catch (error) {
         dispatch({type: 'GET_ALL_USER_FAIL', payload: error.message})
     }

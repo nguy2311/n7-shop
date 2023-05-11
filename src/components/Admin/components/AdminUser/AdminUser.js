@@ -7,10 +7,12 @@ import './AdminUser.css'
 function AdminUser(props) {
     const dispatch = useDispatch()
     const users = useSelector(state => state.users.user)
+    const { userInfo } = useSelector((state) => state.userSignin);
 
     useEffect(() => {
         dispatch(getAllUser())
-    }, [dispatch])
+    }, [])
+
     return (
         <div className="admin-user">
             <span>Customers</span>

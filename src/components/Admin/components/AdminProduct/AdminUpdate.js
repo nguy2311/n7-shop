@@ -14,9 +14,9 @@ function AdminUpdate(props) {
   const { id } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-
-  const [image, setImage] = useState("");
   const detailProduct = useSelector((state) => state.getProductById.product);
+  const [image, setImage] = useState("");
+
   const SelectList = useSelector((state) => state.selectList.List);
   const [activeTypeProduct, setActiveTypeproduct] = useState(undefined);
   const { List } = useSelector((state) => state.allTypeProduct);
@@ -101,7 +101,7 @@ function AdminUpdate(props) {
           <input
             {...register("name")}
             placeholder="Name"
-            defaultValue={detailProduct.name}
+            defaultValue={detailProduct.product_name}
           ></input>
           <input
             {...register("amount")}
@@ -142,12 +142,11 @@ function AdminUpdate(props) {
                 </div>
               ))
             : ""}
-
           <input
             type="file"
             {...register("image")}
             onChange={handleFileImageChange}
-          ></input>
+          />
           <button type="submit">Update Product</button>
         </form>
       ) : (

@@ -24,11 +24,11 @@ export const CartReducer = (state = {cartItems: []}, action) => {
         
         case 'DELETE_TO_CART': {
             let newList = [...state.cartItems]
-            const exists = newList.find(item => item._id === action.payload._id)
+            const exists = newList.find(item => item.id === action.payload.id)
             if (exists.qty === 1) {
-                newList = newList.filter((item) => item._id !== exists._id)
+                newList = newList.filter((item) => item.id !== exists.id)
             }else{
-                newList = newList.map((item) => item._id === action.payload._id ? { ...exists, qty: exists.qty - 1 } : item)
+                newList = newList.map((item) => item.id === action.payload.id ? { ...exists, qty: exists.qty - 1 } : item)
             }
     
             localStorage.setItem('cartItems', JSON.stringify(newList))
@@ -41,7 +41,7 @@ export const CartReducer = (state = {cartItems: []}, action) => {
         case 'DELETE_QTY_PRODUCT': {
             let newList = [...state.cartItems]
             
-            newList = newList.filter((item) => item._id !== action.payload._id)
+            newList = newList.filter((item) => item.id !== action.payload.id)
             
             localStorage.setItem('cartItems', JSON.stringify(newList))
             return {

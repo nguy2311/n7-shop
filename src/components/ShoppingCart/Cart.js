@@ -13,7 +13,6 @@ function Cart(props) {
     const cartItems = useSelector((state) => state.cart.cartItems);
     const userInfo = useSelector((state) => state.userSignin.userInfo);
 
-    console.log('cartItems', cartItems);
     const totalPrice = cartItems.reduce(
       (total, item) => total + item.qty * item.price,
       0

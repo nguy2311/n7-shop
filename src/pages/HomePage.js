@@ -11,14 +11,33 @@ import { useSelector } from 'react-redux';
 
 function HomePage(props) {
     const {userInfo} = useSelector(state => state.userSignin)
-    
+
+const listCategory = [
+    {
+        id: 1,
+        name: 'Ao'
+    }, {
+        id: 2,
+        name: 'Quan'
+    }, {
+        id: 3,
+        name: 'Quan'
+    }, {
+        id: 4,
+        name: 'Quan'
+    }, {
+        id: 5,
+        name: 'Quan'
+    }
+]
     return (
         <div style={{position: 'relative'}}>
             <Header></Header>
             <Carousel></Carousel>
-            <IPhone></IPhone>
-            <Samsung></Samsung>
-            <Xiaomi></Xiaomi>
+            {
+                listCategory.map((category) => <IPhone category={category}></IPhone>)
+            }
+
             <Footer></Footer>
              <ScrollToTop></ScrollToTop>
             {

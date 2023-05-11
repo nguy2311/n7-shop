@@ -26,8 +26,6 @@ function Detail(props) {
         dispatch(getproductById(id))
     }, [dispatch])
 
-    console.log('detailProduct', detailProduct);
-
     return (
         <section id="detail">
             {

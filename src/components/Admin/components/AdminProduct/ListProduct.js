@@ -26,7 +26,7 @@ function ListProduct(props) {
                     <th>Type</th>
                 </tr>
                 {
-                    listProducts ? listProducts.map((item, index) => (<Product product={item} key={item._id} update={item._id} number={index}></Product>)) : ''
+                    listProducts ? listProducts.map((item, index) => (<Product product={item} key={item.id} update={item.id} number={index}></Product>)) : ''
                 }
             </table>
             

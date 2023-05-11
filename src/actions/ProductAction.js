@@ -55,10 +55,10 @@ export const editCurrentPage = (page) => async (dispatch) => {
     dispatch({type: "EDIT_CURRENT_PAGE", payload: page});
 }
 
-export const paginationProduct = (page) => async (dispatch) => {
+export const paginationProduct = () => async (dispatch) => {
     try {
-        const data = await axiosClient.get(
-            `/products/pagination/${page}`
+        const data = await axios.get(
+            `${BASE_URL_WEB}/product/all`
         );
         dispatch({type: "PAGINATION_PRODUCT", payload: data});
     } catch (error) {
@@ -118,19 +118,24 @@ export const saveProduct = (product) => async (dispatch, getState) => {
 };
 
 export const DeleteProduct = (productId) => async (dispatch, getState) => {
+    const {
+        userSignin: {userInfo},
+    } = getState()
     try {
-        const {
-            userSignin: {userInfo},
-        } = getState();
-        const {data} = await axios.delete(
-            `${BASE_URL_WEB}/product/delete`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userInfo.token}`,
-                },
-            }
-        );
-        dispatch({type: "DELETE_PRODUCT", payload: data});
+        if (userInfo.role === 'admin') {
+            const {data} = await axios.delete(
+                `${BASE_URL_WEB}/product/delete`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${userInfo.accessToken}`,
+                    },
+                    data: {
+                        productId: productId
+                    }
+                }
+            );
+            dispatch(paginationProduct());
+        }
     } catch (error) {
         dispatch({type: "DELETE_PRODUCT_FAIL", payload: error.message});
     }
@@ -141,8 +146,6 @@ export const searchProduct = (name) => async (dispatch, getState) => {
         const {data} = await axios.get(
             `${BASE_URL_WEB}/product/search/?product_name=${name}`
         );
-
-        console.log('data', data);
         dispatch({type: "SEARCH_PRODUCT", payload: data});
     } catch (error) {
         dispatch({type: "SEARCH_PRODUCT_FAIL", payload: error.message});

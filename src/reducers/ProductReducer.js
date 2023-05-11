@@ -6,7 +6,7 @@ const initialState = {
 export const getAllProductReducer = (state = initialState, action) => {
     switch (action.type) {
         case 'GET_ALL_PRODUCT':
-            return {...state, product: action.payload}
+            return {...state, product: action.payload.data}
 
         case 'GET_ALL_PRODUCT_FAIL':
             return {...state, error: action.payload}
@@ -68,7 +68,7 @@ export const getAllProductReducer = (state = initialState, action) => {
         }
         
         case 'PAGINATION_PRODUCT':
-            return {...state, product: action.payload}
+            return {...state, product: action.payload.data.data}
 
         default:
             return state
@@ -91,7 +91,7 @@ export const getAllProductReducer = (state = initialState, action) => {
 export const getProductByIdReducer = (state = {}, action) => {
     switch (action.type) {
         case 'GET_PRODUCT_BY_ID':{
-            return {...state, product: action.payload}
+            return {...state, product: action.payload.data}
         }
 
         case 'REMOVE_PRODUCT_BY_ID':{
@@ -146,7 +146,7 @@ export const getProductByIdReducer = (state = {}, action) => {
 export const searchProductReducer = (state = {}, action) => {
     switch (action.type) {
         case 'SEARCH_PRODUCT':{
-            return {...state, products: action.payload}
+            return {...state, products: action.payload.data}
         }
 
         case 'SEARCH_PRODUCT_FAIL':{

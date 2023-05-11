@@ -10,12 +10,12 @@ import { AppstoreAddOutlined, ToolOutlined } from "@ant-design/icons";
 
 function AdminProduct(props) {
   const dispatch = useDispatch();
-  const currentPage = useSelector((state) => state.allProduct.currentPage);
-  const { products } = useSelector((state) => state.allProduct.product);
+  // const currentPage = useSelector((state) => state.allProduct.currentPage);
+  const products = useSelector((state) => state.allProduct.product);
 
   useEffect(() => {
-    dispatch(paginationProduct(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(paginationProduct());
+  }, []);
 
   return (
     <div className="admin-product">

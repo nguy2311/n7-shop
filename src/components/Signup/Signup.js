@@ -19,7 +19,6 @@ function Signup(props) {
                 card_type: null
             }
         }
-        console.log('data', data);
         const {repeat_password, ...rest} = data;
         if (password === confirmPassword) {
             dispatch(SignupUser(rest))
